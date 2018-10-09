@@ -38,7 +38,20 @@ add_form = """
 
 # a form for crossing off watched movies
 crossoff_form = """
-
+    <form action="/crossoff" method="post">
+        <label for="watched-movie">
+            I want to cross off 
+            <select id="watched-movie" name="watched-movie">
+                <option value="B is for Beer">B is for Beer</option>
+                <option value="The Goonies">The Goonies</option>
+                <option value="Willy Wonka and the Chocolate Factory">Willy Wonka and the Chocolate Factory</option>
+                <option value="Pure Country">Pure Country</option>
+                <option value="Eyes Wide Shut">Eyes Wide Shut</option>
+            </select>
+            from my Watchlist.
+        </label>
+        <input type="submit" value="crossoff"/>
+    </form>
 """
 
 # TODO:
@@ -46,9 +59,14 @@ crossoff_form = """
 # "Star Wars has been crossed off your watchlist".
 # And create a route above the function definition to receive and handle the request from 
 # your crossoff_form.
+@app.route("/crossoff", methods=['POST'])
 def crossoff_movie():
-    crossed_off_movie = request.form['crossed-off-movie']    
+    crossed_off_movie = request.form['watched-movie']    
+    crossed_off_movie_element = "<strong><strike>" + crossed_off_movie + "</strike></strong>"
+    cross_off_response = crossed_off_movie_element + " has been crossed off your Watchlist!"
+    content = page_header + "<p>" + cross_off_response + "<p>" + page_footer
 
+    return content
 # TODO:
 # modify the crossoff_form above to use a dropdown (<select>) instead of
 # an input text field (<input type="text"/>)
@@ -70,7 +88,7 @@ def index():
     edit_header = "<h2>Edit My Watchlist</h2>"
 
     # build the response string
-    content = page_header + edit_header + add_form + page_footer
+    content = page_header + edit_header + add_form + crossoff_form + page_footer
 
     return content
 
