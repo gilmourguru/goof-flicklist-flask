@@ -20,6 +20,7 @@ page_footer = """
 """
 
 # a form for adding new movies
+# edit
 add_form = """
     <form action="/add" method="post">
         <label for="new-movie">
